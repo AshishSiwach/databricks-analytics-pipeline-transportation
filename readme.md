@@ -1,114 +1,104 @@
-📘 3. FINAL GITHUB README (copy-paste ready)
-🚖 Transportation Data Pipeline (Goodcabs)
-📌 Overview
+# 🚖 Transportation Data Pipeline — cabs
 
-This project simulates an analytics engineering pipeline for a fictional cabs company. The system processes daily transportation data and transforms it into analysis-ready datasets using Databricks Lakeflow Declarative Pipelines.
+> An analytics engineering pipeline that transforms raw cab data into city-level business intelligence using Databricks Lakeflow Spark Declarative Pipelines.
 
-🏗️ Architecture
-![alt text](architecture.png)
+---
 
-Source: Daily trip export files (CSV)
+## 📌 Overview
 
-Storage: AWS S3
+This project simulates a production-grade analytics engineering workflow for a fictional cab company. Daily transportation data is ingested from AWS S3, processed through a **Medallion architecture**, and surfaced as analysis-ready datasets powering city-level performance dashboards.
 
-Processing: Databricks (PySpark + Lakeflow)
+---
 
-Modeling: Medallion architecture
+## 🏗️ Architecture
 
-Consumption: City-level dashboards
+<img width="14204" height="4628" alt="architecture" src="https://github.com/user-attachments/assets/2685b576-2579-4572-97a1-5674454c5414" />
 
-⚙️ Key Design Decisions
-🔹 Incremental vs Batch Ingestion
 
-Trips dataset:
+| Layer | Technology |
+|-------|-----------|
+| **Source** | Daily CSV trip exports |
+| **Storage** | AWS S3 |
+| **Processing** | Databricks (PySpark + Lakeflow) |
+| **Modeling** | Medallion Architecture (Bronze → Silver → Gold) |
+| **Consumption** | City-level dashboards |
 
-Daily files (e.g. trip_export_YYYY-MM-DD.csv)
+---
 
-Ingested using Databricks Auto Loader for incremental processing
+## 🧱 Data Layers
 
-City dataset:
+### 🥉 Bronze — Raw Ingestion
+- Ingests raw data directly from S3
+- Preserves source files with no transformation
+- Adds metadata columns: `ingestion_timestamp`, `source_file_name`
+- Handles schema evolution automatically
 
-Small, static dimension (~10 rows)
+### 🥈 Silver — Cleansed & Standardised
+- Applies data cleaning and type standardisation
+- Runs data quality checks
+- Implements CDC-style processing for trip records
+- Produces business-ready structured tables:
+  - `trips`
+  - `city`
+  - `calendar`
 
-Ingested using batch processing
+### 🥇 Gold — Analytical Layer
+- Central analytical table: **`fact_trips`** (trips joined with city + calendar dimensions)
+- Pre-built city-specific views: Jaipur, Surat, Kochi, and more
+- Designed to support region-level dashboards for operations managers
 
-👉 This approach optimizes performance and avoids unnecessary streaming complexity.
+---
 
-🧱 Data Layers
-🥉 Bronze
+## ⚙️ Key Design Decisions
 
-Raw ingestion from S3
+### Incremental vs Batch Ingestion
 
-Metadata columns:
+| Dataset | Strategy | Rationale |
+|---------|----------|-----------|
+| **Trips** | Incremental (Auto Loader) | Daily files (`trip_export_YYYY-MM-DD.csv`) — optimised for high-volume, append-only data |
+| **City** | Batch | Small static dimension (~10 rows) — streaming complexity not justified |
 
-ingestion timestamp
+> This hybrid approach balances performance with simplicity, avoiding unnecessary streaming overhead for low-change data.
 
-file name
+---
 
-Schema evolution handled
+## 🚀 Features
 
-🥈 Silver
+- ⚡ **Incremental ingestion** via Databricks Auto Loader
+- 🏅 **Medallion architecture** (Bronze → Silver → Gold)
+- 🔁 **CDC-style processing** for trip data updates
+- ✅ **Data quality validation** at the Silver layer
+- 📋 **Metadata tracking** (timestamps, source files)
+- 🗺️ **Business-aligned semantic views** per city
 
-Data cleaning and standardization
+---
 
-Data quality checks
+## 💼 Business Value
 
-CDC-style processing for trips
+- Converts raw operational exports into trusted, analysis-ready datasets
+- Enables city-level performance monitoring at scale
+- Simplifies dashboard consumption through predefined semantic views
+- Mirrors real-world analytics engineering patterns used in retail and logistics
 
-Business-ready structured tables:
+---
 
-trips
+## 🧠 Skills Demonstrated
 
-city
+`Data Engineering` &nbsp; `Analytics Engineering` &nbsp; `PySpark` &nbsp; `Databricks Lakeflow` &nbsp; `Data Modelling` &nbsp; `Incremental Processing` &nbsp; `Medallion Architecture` &nbsp; `AWS S3`
 
-calendar
+---
 
-🥇 Gold
+## 📁 Project Structure
 
-Central analytical table:
+```
+goodcabs-pipeline/
+├── bronze/          # Raw ingestion notebooks & Auto Loader config
+├── silver/          # Cleansing, DQ checks, CDC logic
+├── gold/            # fact_trips + city-level views
+├── architecture.png # System architecture diagram
+└── README.md
+```
 
-fact_trips (joined with city + calendar)
+---
 
-City-specific views:
-
-Jaipur, Surat, Kochi, etc.
-
-👉 Designed to support region-level dashboards for managers
-
-💼 Business Value
-
-Converts raw operational data into trusted analytical datasets
-
-Enables city-level performance monitoring
-
-Simplifies dashboard usage through predefined semantic views
-
-Mimics real-world analytics engineering workflows used in retail and logistics
-
-🚀 Features
-
-Incremental ingestion using Auto Loader
-
-Medallion architecture (bronze, silver, gold)
-
-PySpark transformations
-
-Data quality validation
-
-Metadata tracking
-
-Business-aligned data modelling
-
-🧠 Key Skills Demonstrated
-
-Data Engineering
-
-Analytics Engineering
-
-PySpark
-
-Databricks Lakeflow
-
-Data Modelling
-
-Incremental Data Processing
+*Built to simulate production analytics engineering workflows in the transportation domain.*
