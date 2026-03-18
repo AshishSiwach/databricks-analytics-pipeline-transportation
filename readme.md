@@ -84,7 +84,7 @@ This project simulates a production-grade analytics engineering workflow for a f
 
 ## 🧠 Skills Demonstrated
 
-`Data Engineering` &nbsp; `Analytics Engineering` &nbsp; `PySpark` &nbsp; `Databricks Lakeflow` &nbsp; `Data Modelling` &nbsp; `Incremental Processing` &nbsp; `Medallion Architecture` &nbsp; `AWS S3` &nbsp `SQL`
+`Data Engineering` &nbsp; `Analytics Engineering` &nbsp; `PySpark` &nbsp; `Databricks Lakeflow` &nbsp; `Data Modelling` &nbsp; `Incremental Processing` &nbsp; `Medallion Architecture` &nbsp; `AWS S3` &nbsp; `SQL`
 
 ---
 
